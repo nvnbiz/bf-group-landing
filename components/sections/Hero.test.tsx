@@ -6,7 +6,7 @@ import { Hero } from './Hero'
 describe('Hero', () => {
   it('renders the result-first headline', () => {
     render(<Hero />)
-    expect(screen.getByRole('heading', { level: 1, name: /приносят заявки/i })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { level: 1, name: /Заявки, а не просто/i })).toBeInTheDocument()
   })
 
   it('links the primary CTA to the contact section', () => {
