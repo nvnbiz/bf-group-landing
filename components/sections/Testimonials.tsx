@@ -17,8 +17,8 @@ export function Testimonials() {
       <FadeIn className="mx-auto mt-12 max-w-3xl rounded-2xl bg-bg-card p-6 text-center">
         <h3 className="font-heading text-xl font-semibold text-text-primary">Почему BF GROUP, а не агентство</h3>
         <p className="mt-3 font-body text-text-secondary">
-          Личное участие на всех этапах, экспертиза именно в ИИ-инструментах, скорость принятия решений без
-          согласований внутри команды.
+          Прямой контакт с командой на всех этапах, экспертиза именно в ИИ-инструментах и быстрые решения — без
+          долгих согласований и лишних посредников.
         </p>
       </FadeIn>
     </section>

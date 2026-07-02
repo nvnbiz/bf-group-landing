@@ -10,7 +10,7 @@ describe('GuaranteesFaq', () => {
   it('renders all guarantees', () => {
     render(<GuaranteesFaq />)
     expect(
-      screen.getByText('Работаю по договору — фиксируем объём, сроки и стоимость на берегу')
+      screen.getByText('Работаем по договору — фиксируем объём, сроки и стоимость на берегу')
     ).toBeInTheDocument()
   })
 
