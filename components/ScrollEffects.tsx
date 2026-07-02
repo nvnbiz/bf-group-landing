@@ -16,11 +16,12 @@ export function ScrollEffects() {
     gsap.registerPlugin(ScrollTrigger)
 
     const lenis = new Lenis()
+    let rafId: number
     function raf(time: number) {
       lenis.raf(time)
-      requestAnimationFrame(raf)
+      rafId = requestAnimationFrame(raf)
     }
-    requestAnimationFrame(raf)
+    rafId = requestAnimationFrame(raf)
     lenis.on('scroll', ScrollTrigger.update)
 
     const heroTween = gsap.to('#hero > *', {
@@ -46,6 +47,7 @@ export function ScrollEffects() {
     })
 
     return () => {
+      cancelAnimationFrame(rafId)
       heroTween.scrollTrigger?.kill()
       heroTween.kill()
       casesTween.scrollTrigger?.kill()

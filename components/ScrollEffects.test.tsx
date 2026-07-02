@@ -43,4 +43,18 @@ describe('ScrollEffects', () => {
     expect(gsap.to).toHaveBeenCalled()
     expect(gsap.from).toHaveBeenCalled()
   })
+
+  it('cancels the requestAnimationFrame loop on unmount when motion is allowed', () => {
+    vi.mocked(usePrefersReducedMotion).mockReturnValue(false)
+    const rafSpy = vi.spyOn(window, 'requestAnimationFrame').mockReturnValue(123)
+    const cancelSpy = vi.spyOn(window, 'cancelAnimationFrame').mockImplementation(() => {})
+
+    const { unmount } = render(<ScrollEffects />)
+    unmount()
+
+    expect(cancelSpy).toHaveBeenCalled()
+
+    rafSpy.mockRestore()
+    cancelSpy.mockRestore()
+  })
 })
