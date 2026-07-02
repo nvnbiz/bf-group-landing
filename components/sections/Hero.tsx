@@ -6,7 +6,7 @@ export function Hero() {
         className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_50%_20%,theme(colors.accent.violet/30%),transparent_60%)] motion-safe:animate-pulse motion-reduce:animate-none"
       />
       <h1 className="font-heading text-4xl font-bold text-text-primary md:text-6xl">
-        Заявки, а не просто красивый сайт: делаю сайты, приложения и ИИ-агентов, которые работают на результат
+        Заявки, а не просто красивый сайт
       </h1>
       <p className="mx-auto mt-6 max-w-2xl font-body text-lg text-text-secondary">
         Для экспертов и бизнеса, которым нужен результат, а не процесс — BF GROUP
