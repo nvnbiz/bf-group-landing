@@ -53,4 +53,17 @@ describe('POST /api/contact', () => {
 
     expect(response.status).toBe(500)
   })
+
+  it('returns 500 when request body is malformed JSON', async () => {
+    const response = await POST(
+      new Request('http://localhost/api/contact', {
+        method: 'POST',
+        body: '{not valid json',
+      })
+    )
+    const json = await response.json()
+
+    expect(response.status).toBe(500)
+    expect(json.ok).toBe(false)
+  })
 })

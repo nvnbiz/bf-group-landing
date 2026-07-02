@@ -18,15 +18,15 @@ function isValidPayload(data: unknown): data is ContactPayload {
 }
 
 export async function POST(request: Request) {
-  const data = await request.json()
-
-  if (!isValidPayload(data)) {
-    return NextResponse.json({ ok: false, error: 'Заполните все поля формы' }, { status: 400 })
-  }
-
-  const text = `Новая заявка с сайта BF GROUP\nИмя: ${data.name}\nКонтакт: ${data.contact}\nЗадача: ${data.message}`
-
   try {
+    const data = await request.json()
+
+    if (!isValidPayload(data)) {
+      return NextResponse.json({ ok: false, error: 'Заполните все поля формы' }, { status: 400 })
+    }
+
+    const text = `Новая заявка с сайта BF GROUP\nИмя: ${data.name}\nКонтакт: ${data.contact}\nЗадача: ${data.message}`
+
     const sent = await sendTelegramMessage(text)
     if (!sent) {
       return NextResponse.json(
