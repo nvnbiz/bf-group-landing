@@ -9,7 +9,7 @@ export function Hero() {
         Заявки, а не просто красивый сайт
       </h1>
       <p className="mx-auto mt-6 max-w-2xl font-body text-lg text-text-secondary">
-        Для экспертов и бизнеса, которым нужен результат, а не процесс — BF GROUP
+        Для экспертов и бизнеса, которым нужен результат, а не процесс
       </p>
       <div className="mt-10 flex flex-wrap justify-center gap-4">
         <a
