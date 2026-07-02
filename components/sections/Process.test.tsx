@@ -17,4 +17,12 @@ describe('Process', () => {
       'Запуск и поддержка',
     ])
   })
+
+  it('renders steps as direct <li> children of the <ol>', () => {
+    const { container } = render(<Process />)
+    const ol = container.querySelector('ol')
+    expect(ol).not.toBeNull()
+    const directLiChildren = Array.from(ol!.children).filter((el) => el.tagName === 'LI')
+    expect(directLiChildren).toHaveLength(4)
+  })
 })
