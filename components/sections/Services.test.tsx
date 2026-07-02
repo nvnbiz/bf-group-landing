@@ -11,7 +11,7 @@ describe('Services', () => {
     render(<Services />)
 
     expect(screen.getByRole('heading', { name: 'Сайты и лендинги' })).toBeInTheDocument()
-    expect(screen.getByRole('heading', { name: 'Веб и мобильные приложения' })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: 'Веб- и мобильные приложения' })).toBeInTheDocument()
     expect(screen.getByRole('heading', { name: 'ИИ-агенты и автоматизация' })).toBeInTheDocument()
 
     const ctaLinks = screen.getAllByRole('link', { name: 'Узнать подробнее →' })

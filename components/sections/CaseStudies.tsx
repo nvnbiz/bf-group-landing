@@ -17,12 +17,16 @@ export function CaseStudies() {
             <p className="mt-3 font-body text-text-secondary"><strong>Проблема:</strong> {caseStudy.problem}</p>
             <p className="mt-2 font-body text-text-secondary"><strong>Решение:</strong> {caseStudy.solution}</p>
             <p className="mt-2 font-mono text-accent-cyan"><strong>Результат:</strong> {caseStudy.result}</p>
-            <a
-              href={caseStudy.link}
-              className="mt-4 inline-block font-body text-accent-cyan hover:text-accent-violet focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent-cyan"
-            >
-              Смотреть проект →
-            </a>
+            {caseStudy.link.startsWith('[TODO') ? (
+              <span className="mt-4 inline-block font-body text-text-secondary">Смотреть проект →</span>
+            ) : (
+              <a
+                href={caseStudy.link}
+                className="mt-4 inline-block font-body text-accent-cyan hover:text-accent-violet focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent-cyan"
+              >
+                Смотреть проект →
+              </a>
+            )}
           </FadeIn>
         ))}
       </div>

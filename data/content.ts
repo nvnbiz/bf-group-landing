@@ -59,7 +59,7 @@ export const services: Service[] = [
   },
   {
     id: 'apps',
-    title: 'Веб и мобильные приложения',
+    title: 'Веб- и мобильные приложения',
     description: 'От MVP до полноценного продукта — быстро и без лишней бюрократии.',
     ctaHref: '#cases',
   },

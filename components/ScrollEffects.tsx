@@ -24,34 +24,33 @@ export function ScrollEffects() {
     rafId = requestAnimationFrame(raf)
     lenis.on('scroll', ScrollTrigger.update)
 
-    const heroTween = gsap.to('#hero > *', {
-      opacity: 0.3,
-      y: -40,
-      ease: 'none',
-      scrollTrigger: {
-        trigger: '#hero',
-        start: 'top top',
-        end: 'bottom top',
-        scrub: true,
-      },
-    })
+    const ctx = gsap.context(() => {
+      gsap.to('#hero > *', {
+        opacity: 0.3,
+        y: -40,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: '#hero',
+          start: 'top top',
+          end: 'bottom top',
+          scrub: true,
+        },
+      })
 
-    const casesTween = gsap.from('#cases', {
-      opacity: 0,
-      y: 60,
-      duration: 0.8,
-      scrollTrigger: {
-        trigger: '#cases',
-        start: 'top 80%',
-      },
+      gsap.from('#cases', {
+        opacity: 0,
+        y: 60,
+        duration: 0.8,
+        scrollTrigger: {
+          trigger: '#cases',
+          start: 'top 80%',
+        },
+      })
     })
 
     return () => {
       cancelAnimationFrame(rafId)
-      heroTween.scrollTrigger?.kill()
-      heroTween.kill()
-      casesTween.scrollTrigger?.kill()
-      casesTween.kill()
+      ctx.revert()
       lenis.destroy()
     }
   }, [prefersReducedMotion])

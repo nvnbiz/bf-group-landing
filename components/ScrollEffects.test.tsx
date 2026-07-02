@@ -18,6 +18,10 @@ vi.mock('gsap', () => ({
     registerPlugin: vi.fn(),
     to: vi.fn().mockReturnValue({ kill: vi.fn(), scrollTrigger: { kill: vi.fn() } }),
     from: vi.fn().mockReturnValue({ kill: vi.fn(), scrollTrigger: { kill: vi.fn() } }),
+    context: vi.fn((fn: () => void) => {
+      fn()
+      return { revert: vi.fn() }
+    }),
   },
 }))
 vi.mock('gsap/ScrollTrigger', () => ({
@@ -56,5 +60,18 @@ describe('ScrollEffects', () => {
 
     rafSpy.mockRestore()
     cancelSpy.mockRestore()
+  })
+
+  it('reverts the gsap context (and its inline styles) on unmount', () => {
+    vi.mocked(usePrefersReducedMotion).mockReturnValue(false)
+
+    const { unmount } = render(<ScrollEffects />)
+
+    expect(gsap.context).toHaveBeenCalled()
+    const ctxResult = vi.mocked(gsap.context).mock.results[0]?.value as { revert: () => void }
+
+    unmount()
+
+    expect(ctxResult.revert).toHaveBeenCalled()
   })
 })
