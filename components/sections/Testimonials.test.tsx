@@ -9,7 +9,8 @@ vi.mock('@/lib/hooks/usePrefersReducedMotion', () => ({
 describe('Testimonials', () => {
   it('renders every testimonial', () => {
     render(<Testimonials />)
-    expect(screen.getAllByText('[TODO: текст отзыва]', { exact: false }).length).toBeGreaterThanOrEqual(2)
+    expect(screen.getByText('Дмитрий Волков')).toBeInTheDocument()
+    expect(screen.getByText('Нино Меликишвили')).toBeInTheDocument()
   })
 
   it('renders the "why BF GROUP" USP block', () => {
