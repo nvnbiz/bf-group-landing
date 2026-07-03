@@ -158,7 +158,7 @@ export const faqItems: FaqItem[] = [
 ]
 
 export const pricingTiers: PricingTier[] = [
-  { title: 'Сайты и лендинги', priceFrom: '[TODO: цена от]' },
-  { title: 'Приложения', priceFrom: '[TODO: цена от]' },
-  { title: 'ИИ-агенты', priceFrom: '[TODO: цена от]' },
+  { title: 'Сайты и лендинги', priceFrom: 'от 10 000 ₽' },
+  { title: 'Приложения', priceFrom: 'от 10 000 ₽' },
+  { title: 'ИИ-агенты', priceFrom: 'от 10 000 ₽' },
 ]
