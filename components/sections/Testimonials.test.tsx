@@ -10,7 +10,7 @@ describe('Testimonials', () => {
   it('renders every testimonial', () => {
     render(<Testimonials />)
     expect(screen.getByText('Дмитрий Волков')).toBeInTheDocument()
-    expect(screen.getByText('Нино Меликишвили')).toBeInTheDocument()
+    expect(screen.getByText('Анна Гончарова')).toBeInTheDocument()
   })
 
   it('renders the "why BF GROUP" USP block', () => {
