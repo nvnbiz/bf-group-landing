@@ -246,6 +246,26 @@
     finIO.observe(finApp);
   });
 
+  /* липкая кнопка: появляется после первого экрана, прячется у блока контактов */
+  safe(function () {
+    var cta = document.getElementById("stickyCta");
+    var contacts = document.getElementById("contacts");
+    if (!cta) return;
+    function update() {
+      var passedHero = window.scrollY > 700;
+      var nearContacts = false;
+      if (contacts) {
+        var top = contacts.getBoundingClientRect().top;
+        nearContacts = top < window.innerHeight * 0.9;
+      }
+      if (passedHero && !nearContacts) cta.classList.add("show");
+      else cta.classList.remove("show");
+    }
+    window.addEventListener("scroll", update, { passive: true });
+    window.addEventListener("resize", update);
+    update();
+  });
+
   /* FAQ: only one open */
   safe(function () {
     var faqItems = list(".faq details");
