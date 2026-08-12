@@ -153,7 +153,12 @@ h2 em,h1 em{font-style:italic;font-weight:500;color:var(--amber)}
   color:#3ddc84;border:1px solid rgba(61,220,132,.45);border-radius:999px;padding:.06rem .5rem;
   white-space:nowrap;vertical-align:.08em;
 }
-.ai-note{margin-top:2rem;color:var(--muted);font-size:.95rem;max-width:680px}
+.ai-demand{
+  margin-top:2rem;max-width:680px;color:var(--muted);font-size:.95rem;line-height:1.6;
+  border-left:2px solid var(--accent);padding-left:1.1rem;
+}
+.ai-demand b{color:var(--amber);font-weight:700}
+.ai-note{margin-top:1.2rem;color:var(--muted);font-size:.95rem;max-width:680px}
 .audit-card{
   display:grid;grid-template-columns:1.5fr 1fr;gap:2.5rem;align-items:center;
   background:linear-gradient(150deg,rgba(175,145,95,.14),var(--card) 55%);
