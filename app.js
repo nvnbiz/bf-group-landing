@@ -2,27 +2,61 @@
 (function () {
   "use strict";
 
+  /* Если где-то случится ошибка скрипта — снимаем класс js,
+     и весь контент показывается без анимаций вместо пустого экрана. */
+  function showEverything() {
+    document.documentElement.className = document.documentElement.className.replace(/\bjs\b/g, "");
+  }
+  window.addEventListener("error", showEverything);
+
+  /* Каждый блок изолирован: поломка одного не роняет остальные. */
+  function safe(fn) {
+    try { fn(); } catch (e) { if (window.console) console.error(e); }
+  }
+
+  function list(selector, root) {
+    return Array.prototype.slice.call((root || document).querySelectorAll(selector));
+  }
+
+  var hasIO = typeof window.IntersectionObserver === "function";
+
   /* header */
-  var header = document.getElementById("header");
-  function onScroll() { header.classList.toggle("scrolled", window.scrollY > 40); }
-  window.addEventListener("scroll", onScroll, { passive: true });
-  onScroll();
+  safe(function () {
+    var header = document.getElementById("header");
+    if (!header) return;
+    function onScroll() {
+      if (window.scrollY > 40) header.classList.add("scrolled");
+      else header.classList.remove("scrolled");
+    }
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+  });
 
   /* burger */
-  var burger = document.getElementById("burger");
-  var nav = document.getElementById("nav");
-  burger.addEventListener("click", function () { nav.classList.toggle("open"); });
-  nav.addEventListener("click", function (e) {
-    if (e.target.tagName === "A") nav.classList.remove("open");
+  safe(function () {
+    var burger = document.getElementById("burger");
+    var nav = document.getElementById("nav");
+    if (!burger || !nav) return;
+    burger.addEventListener("click", function () { nav.classList.toggle("open"); });
+    nav.addEventListener("click", function (e) {
+      if (e.target.tagName === "A") nav.classList.remove("open");
+    });
   });
 
   /* reveal on scroll */
-  var io = new IntersectionObserver(function (entries) {
-    entries.forEach(function (en) {
-      if (en.isIntersecting) { en.target.classList.add("visible"); io.unobserve(en.target); }
-    });
-  }, { threshold: 0.1 });
-  document.querySelectorAll(".reveal").forEach(function (el) { io.observe(el); });
+  safe(function () {
+    var items = list(".reveal");
+    if (!hasIO) {
+      items.forEach(function (el) { el.classList.add("visible"); });
+      return;
+    }
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (en.isIntersecting) { en.target.classList.add("visible"); io.unobserve(en.target); }
+      });
+    }, { threshold: 0.1 });
+    items.forEach(function (el) { io.observe(el); });
+  });
 
   /* live chats: hero demo + Arina case */
   function runChat(chat, script) {
@@ -88,8 +122,25 @@
     setTimeout(function () { play(0); }, 900);
   }
 
-  var heroChat = document.getElementById("demoChat");
-  if (heroChat) {
+  /* запускает чат, когда блок появился на экране */
+  function chatOnView(chat, script) {
+    if (!hasIO) { runChat(chat, script); return; }
+    var started = false;
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (en.isIntersecting && !started) {
+          started = true;
+          runChat(chat, script);
+          io.disconnect();
+        }
+      });
+    }, { threshold: 0.4 });
+    io.observe(chat);
+  }
+
+  safe(function () {
+    var heroChat = document.getElementById("demoChat");
+    if (!heroChat) return;
     runChat(heroChat, [
       { t: "time", text: "23:47" },
       { t: "in", text: "Здравствуйте! Есть свободное окно на завтра?" },
@@ -98,23 +149,12 @@
       { t: "out", text: "Записала вас на 17:30. За час пришлю напоминание и адрес." },
       { t: "sys", text: "Заявка передана в CRM · ответ занял 40 секунд" }
     ]);
-  }
+  });
 
-  var arinaChat = document.getElementById("arinaChat");
-  if (arinaChat) {
-    var arinaStarted = false;
-    var arinaIO = new IntersectionObserver(function (entries) {
-      entries.forEach(function (en) {
-        if (en.isIntersecting && !arinaStarted) {
-          arinaStarted = true;
-          startArina();
-          arinaIO.disconnect();
-        }
-      });
-    }, { threshold: 0.4 });
-    arinaIO.observe(arinaChat);
-    function startArina() {
-      runChat(arinaChat, [
+  safe(function () {
+    var arinaChat = document.getElementById("arinaChat");
+    if (!arinaChat) return;
+    chatOnView(arinaChat, [
       { t: "time", text: "08:30" },
       { t: "accent", text: "Доброе утро! День под контролем:" },
       { t: "sched", rows: [
@@ -125,26 +165,28 @@
       ]},
       { t: "in", text: "Забронируй билет в Москву на пятницу" },
       { t: "out", text: "Готово ✓ Билет куплен: пт, 09:40 · S7 · 12 300 ₽. Регистрацию на рейс делаем?" },
-        { t: "in", text: "Да, сделай" },
-        { t: "out", text: "Зарегистрировала ✓ Место 14A, посадочный уже у вас." }
-      ]);
-    }
-  }
+      { t: "in", text: "Да, сделай" },
+      { t: "out", text: "Зарегистрировала ✓ Место 14A, посадочный уже у вас." }
+    ]);
+  });
 
   /* astrocartography map: city tooltips */
-  var ayaMap = document.getElementById("ayaMap");
-  var wmTip = document.getElementById("wmTip");
-  if (ayaMap && wmTip) {
+  safe(function () {
+    var ayaMap = document.getElementById("ayaMap");
+    var wmTip = document.getElementById("wmTip");
+    if (!ayaMap || !wmTip) return;
     var tipTitle = wmTip.querySelector("b");
     var tipDesc = wmTip.querySelector("span");
-    ayaMap.querySelectorAll(".wm-city").forEach(function (city) {
+    list(".wm-city", ayaMap).forEach(function (city) {
       var m = /translate\(([\d.]+) ([\d.]+)\)/.exec(city.getAttribute("transform"));
+      if (!m) return;
       function show() {
         tipTitle.textContent = city.getAttribute("data-t");
         tipDesc.textContent = city.getAttribute("data-d");
         wmTip.style.left = (m[1] / 1280 * 100) + "%";
         wmTip.style.top = (m[2] / 677 * 100) + "%";
-        wmTip.classList.toggle("below", m[2] / 677 < 0.45);
+        if (m[2] / 677 < 0.45) wmTip.classList.add("below");
+        else wmTip.classList.remove("below");
         wmTip.classList.add("show");
       }
       function hide() { wmTip.classList.remove("show"); }
@@ -155,41 +197,34 @@
         else show();
       });
     });
-  }
+  });
 
   /* Aya dialogue: start on scroll into view */
-  var ayaChat = document.getElementById("ayaChat");
-  if (ayaChat) {
-    var ayaStarted = false;
-    var ayaIO = new IntersectionObserver(function (entries) {
-      entries.forEach(function (en) {
-        if (en.isIntersecting && !ayaStarted) {
-          ayaStarted = true;
-          runChat(ayaChat, [
-            { t: "time", text: "сегодня" },
-            { t: "in", text: "Айя, куда поехать отдохнуть с 1 по 16 сентября?" },
-            { t: "out", text: "Смотрю вашу карту. В сентябре через Бали проходит ваша линия Венеры ♀ — отдых, восстановление, красота. Берите даты 3–14 сентября." },
-            { t: "in", text: "А мероприятие для клиентов где лучше провести?" },
-            { t: "out", text: "Дубай. Там ваша линия Юпитера ♃ — признание и рост: запуски и переговоры ложатся идеально. Для короткой поездки на 2–3 дня — Лиссабон, линия Солнца ☉." },
-            { t: "sys", text: "Разбор карты · 3 минуты вместо 4–5 часов" }
-          ]);
-          ayaIO.disconnect();
-        }
-      });
-    }, { threshold: 0.4 });
-    ayaIO.observe(ayaChat);
-  }
+  safe(function () {
+    var ayaChat = document.getElementById("ayaChat");
+    if (!ayaChat) return;
+    chatOnView(ayaChat, [
+      { t: "time", text: "сегодня" },
+      { t: "in", text: "Айя, куда поехать отдохнуть с 1 по 16 сентября?" },
+      { t: "out", text: "Смотрю вашу карту. В сентябре через Бали проходит ваша линия Венеры ♀ — отдых, восстановление, красота. Берите даты 3–14 сентября." },
+      { t: "in", text: "А мероприятие для клиентов где лучше провести?" },
+      { t: "out", text: "Дубай. Там ваша линия Юпитера ♃ — признание и рост: запуски и переговоры ложатся идеально. Для короткой поездки на 2–3 дня — Лиссабон, линия Солнца ☉." },
+      { t: "sys", text: "Разбор карты · 3 минуты вместо 4–5 часов" }
+    ]);
+  });
 
   /* finance tracker demo: play on scroll into view */
-  var finApp = document.getElementById("finApp");
-  if (finApp) {
-    var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  safe(function () {
+    var finApp = document.getElementById("finApp");
+    if (!finApp) return;
+    var reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     var finPlayed = false;
     function playFin() {
       if (finPlayed) return;
       finPlayed = true;
       finApp.classList.add("play");
       var numEl = finApp.querySelector(".fin-num");
+      if (!numEl) return;
       var target = parseInt(numEl.getAttribute("data-count"), 10);
       if (reduceMotion) { numEl.textContent = target.toLocaleString("ru-RU") + " ₽"; return; }
       var start = null, dur = 1800;
@@ -202,19 +237,22 @@
       }
       requestAnimationFrame(tick);
     }
+    if (!hasIO) { playFin(); return; }
     var finIO = new IntersectionObserver(function (entries) {
       entries.forEach(function (en) {
         if (en.isIntersecting) { playFin(); finIO.disconnect(); }
       });
     }, { threshold: 0.4 });
     finIO.observe(finApp);
-  }
+  });
 
   /* FAQ: only one open */
-  var faqItems = document.querySelectorAll(".faq details");
-  faqItems.forEach(function (d) {
-    d.addEventListener("toggle", function () {
-      if (d.open) faqItems.forEach(function (o) { if (o !== d) o.open = false; });
+  safe(function () {
+    var faqItems = list(".faq details");
+    faqItems.forEach(function (d) {
+      d.addEventListener("toggle", function () {
+        if (d.open) faqItems.forEach(function (o) { if (o !== d) o.open = false; });
+      });
     });
   });
 })();

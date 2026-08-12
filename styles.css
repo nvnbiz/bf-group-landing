@@ -444,9 +444,10 @@ h2 em,h1 em{font-style:italic;font-weight:500;color:var(--amber)}
 .footer a{color:var(--muted);text-decoration:none}
 .footer a:hover{color:var(--amber)}
 
-/* reveal */
-.reveal{opacity:0;transform:translateY(24px);transition:opacity .75s ease,transform .75s ease}
-.reveal.visible{opacity:1;transform:none}
+/* reveal — прячем только если JS живой, иначе контент виден сразу */
+.reveal{opacity:1;transform:none}
+.js .reveal{opacity:0;transform:translateY(24px);transition:opacity .75s ease,transform .75s ease}
+.js .reveal.visible{opacity:1;transform:none}
 
 /* responsive */
 @media(max-width:960px){
