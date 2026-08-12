@@ -272,6 +272,27 @@ h2 em,h1 em{font-style:italic;font-weight:500;color:var(--amber)}
 }
 .case-visual{display:flex;justify-content:center}
 
+/* компактные кейсы без макетов */
+.cases-more{
+  margin:3.4rem 0 1.6rem;font-size:1.15rem;color:var(--amber);
+  padding-top:2.6rem;border-top:1px solid var(--line);
+}
+.cases-mini{align-items:stretch}
+.case-mini{
+  display:flex;flex-direction:column;background:var(--card);border:1px solid var(--line);
+  border-radius:var(--radius);padding:1.6rem 1.5rem;transition:border-color .25s,transform .25s;
+}
+.case-mini:hover{border-color:rgba(175,145,95,.5);transform:translateY(-3px)}
+.case-mini-role{
+  display:inline-block;align-self:flex-start;background:var(--accent-soft);
+  border:1px solid rgba(175,145,95,.45);color:var(--amber);
+  font-size:.75rem;font-weight:700;padding:.26rem .8rem;border-radius:999px;margin-bottom:.8rem;
+}
+.case-mini h4{font-family:var(--font-display);font-size:1.12rem;font-weight:700;line-height:1.25;margin-bottom:.9rem}
+.case-mini p{color:var(--muted);font-size:.9rem;margin-bottom:.7rem;line-height:1.55}
+.case-mini p b{color:var(--white);font-weight:600}
+.case-mini .case-res{margin-top:auto;font-size:.88rem}
+
 /* mock: phone chat */
 .mock-phone{
   width:min(340px,100%);background:var(--card);border:1px solid var(--line);border-radius:26px;
