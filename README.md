@@ -1,37 +1,31 @@
-# BF GROUP — лендинг-портфолио
+# BF GROUP — лендинг
 
-## Стек
-Next.js 14 (App Router), TypeScript, Tailwind CSS, Framer Motion, GSAP + Lenis.
+Статический сайт: HTML, CSS и немного JavaScript, без сборки и зависимостей.
 
-## Установка
+## Файлы
 
-```bash
-npm install
-cp .env.example .env.local
-```
+- `index.html` — главная страница целиком
+- `styles.css` — оформление
+- `app.js` — анимации, демо-переписки, меню, FAQ
+- `privacy.html` — политика обработки персональных данных
+- `vercel.json` — настройка Vercel: сайт публикуется как статика, без сборки
 
-Заполните `.env.local`:
-- `TELEGRAM_BOT_TOKEN` — токен Telegram-бота (получить у @BotFather)
-- `TELEGRAM_CHAT_ID` — ID чата/канала, куда приходят заявки
+## Локальный просмотр
 
-## Разработка
+Достаточно открыть `index.html` в браузере двойным щелчком.
 
-```bash
-npm run dev
-```
+## Заявки
 
-## Тесты
+Формы на сайте нет. Все кнопки ведут в Telegram:
 
-```bash
-npm test
-```
+- бот для аудита — [@bfgroup_bot](https://t.me/bfgroup_bot)
+- канал — [@bf_group_official](https://t.me/bf_group_official)
 
-## Деплой на Vercel
+## Деплой
 
-1. Импортировать репозиторий в Vercel.
-2. В настройках проекта → Environment Variables добавить `TELEGRAM_BOT_TOKEN` и `TELEGRAM_CHAT_ID`.
-3. Deploy — Vercel автоматически определит Next.js проект.
+Vercel собирает сайт из ветки `main` этого репозитория автоматически при каждом push.
 
-## Контент
+## История
 
-Плейсхолдер-контент находится в `data/content.ts`, помечен `[TODO: ...]`. Перед публичным запуском заменить на реальные кейсы, отзывы, цены и ссылки.
+Предыдущая версия сайта (Next.js, TypeScript, Tailwind, форма заявок через Telegram-бота)
+сохранена в ветке `old-site-nextjs`.
