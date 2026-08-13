@@ -38,7 +38,7 @@
     <a href="#about">Команда</a>
     <a href="#faq">Вопросы</a>
   </nav>
-  <a class="header-cta" href="#contacts">Обсудить проект</a>
+  <a class="header-cta" href="#contacts" data-lead="шапка">Обсудить проект</a>
   <button class="burger" id="burger" aria-label="Меню"><span></span><span></span><span></span></button>
 </header>
 
@@ -49,7 +49,7 @@
       <h1 class="reveal">Наша команда делает <em>нейроагентов</em> для экспертов и бизнеса</h1>
       <p class="hero-sub reveal">ИИ-сотрудник, который отвечает клиентам 24/7, ведёт диалог как живой менеджер и забирает рутину на себя. Под ключ — от идеи до запуска.</p>
       <div class="hero-actions reveal">
-        <a class="btn btn-accent" href="#contacts">Обсудить проект</a>
+        <a class="btn btn-accent" href="#contacts" data-lead="первый экран">Обсудить проект</a>
         <a class="btn btn-ghost" href="#cases">Смотреть кейсы</a>
       </div>
     </div>
@@ -177,7 +177,7 @@
         <p class="audit-free">Аудит бесплатный при заказе нейросотрудника</p>
       </div>
       <div class="audit-cta">
-        <a class="btn btn-accent btn-big" href="#contacts">Получить аудит бизнеса</a>
+        <button class="btn btn-accent btn-big" type="button" data-lead="разбор процессов">Получить разбор процессов</button>
         <span class="audit-cta-note">заявка — пара минут, ответим в рабочий день</span>
       </div>
     </div>
@@ -347,7 +347,7 @@
 
     <div class="cta-band reveal">
       <p>Хотите такой же результат?</p>
-      <a class="btn btn-accent" href="#contacts">Обсудить проект</a>
+      <a class="btn btn-accent" href="#contacts" data-lead="после кейсов">Обсудить проект</a>
     </div>
   </div>
 </section>
@@ -508,33 +508,9 @@
     <h2 class="reveal">Начните с аудита вашего бизнеса</h2>
     <p class="contacts-lead reveal">Разберём процессы, покажем, где вы теряете время и деньги, и какой нейросотрудник окупится первым — под вашу нишу. Оставьте заявку: ответим в течение рабочего дня. Полный аудит — бесплатно при заказе нейросотрудника.</p>
 
-    <form class="lead-form reveal" id="leadForm" novalidate>
-      <div class="field">
-        <label for="lead-name">Как к вам обращаться</label>
-        <input id="lead-name" name="name" type="text" autocomplete="name" required maxlength="80" placeholder="Имя">
-      </div>
-      <div class="field">
-        <label for="lead-contact">Телефон, e-mail или Telegram</label>
-        <input id="lead-contact" name="contact" type="text" required maxlength="120" placeholder="+7 900 000-00-00, вы@почта.ру или @username">
-      </div>
-      <div class="field">
-        <label for="lead-task">Какую задачу хотите решить</label>
-        <textarea id="lead-task" name="task" rows="4" required maxlength="2000" placeholder="Например: клиенты пишут ночью, отвечать некому — теряем заявки"></textarea>
-      </div>
-
-      <div class="field-hp" aria-hidden="true">
-        <label for="lead-company">Компания</label>
-        <input id="lead-company" name="company" type="text" tabindex="-1" autocomplete="off">
-      </div>
-
-      <label class="consent">
-        <input type="checkbox" name="consent" required>
-        <span>Согласен с <a href="privacy.html" target="_blank" rel="noopener">политикой обработки персональных данных</a></span>
-      </label>
-
-      <button class="btn btn-accent btn-big form-submit" type="submit">Отправить заявку</button>
-      <p class="form-msg" id="formMsg" role="status" aria-live="polite"></p>
-    </form>
+    <div class="contact-actions reveal">
+      <button class="btn btn-accent btn-big" type="button" data-lead="контакты">Оставить заявку</button>
+    </div>
 
     <div class="contact-direct reveal">
       <span>Или напишите напрямую:</span>
@@ -552,7 +528,47 @@
   <span class="footer-legal">ООО «ФСК ВАВИЛОН» · ИНН 5009111201</span>
 </footer>
 
-<a class="sticky-cta" id="stickyCta" href="#contacts">Обсудить проект</a>
+<a class="sticky-cta" id="stickyCta" href="#contacts" data-lead="кнопка на телефоне">Обсудить проект</a>
+
+<!-- ===== ОКНО ЗАЯВКИ ===== -->
+<div class="lead-modal" id="leadModal" role="dialog" aria-modal="true" aria-labelledby="leadTitle">
+  <div class="lead-backdrop" data-close></div>
+  <div class="lead-card">
+    <button class="lead-close" type="button" aria-label="Закрыть" data-close>&times;</button>
+    <h2 id="leadTitle">Расскажите о задаче</h2>
+    <p class="lead-sub">Ответим в течение рабочего дня. Разберём процессы и скажем, какой нейросотрудник окупится первым.</p>
+
+    <form class="lead-form" id="leadForm" novalidate>
+      <div class="field">
+        <label for="lead-name">Как к вам обращаться</label>
+        <input id="lead-name" name="name" type="text" autocomplete="name" required maxlength="80" placeholder="Имя">
+      </div>
+      <div class="field">
+        <label for="lead-contact">Телефон, e-mail или Telegram</label>
+        <input id="lead-contact" name="contact" type="text" required maxlength="120" placeholder="+7 900 000-00-00, вы@почта.ру или @username">
+      </div>
+      <div class="field">
+        <label for="lead-task">Какую задачу хотите решить</label>
+        <textarea id="lead-task" name="task" rows="3" required maxlength="2000" placeholder="Например: клиенты пишут ночью, отвечать некому — теряем заявки"></textarea>
+      </div>
+
+      <div class="field-hp" aria-hidden="true">
+        <label for="lead-company">Компания</label>
+        <input id="lead-company" name="company" type="text" tabindex="-1" autocomplete="off">
+      </div>
+
+      <input type="hidden" name="source" id="leadSource" value="">
+
+      <label class="consent">
+        <input type="checkbox" name="consent" required>
+        <span>Согласен с <a href="privacy.html" target="_blank" rel="noopener">политикой обработки персональных данных</a></span>
+      </label>
+
+      <button class="btn btn-accent btn-big form-submit" type="submit">Отправить заявку</button>
+      <p class="form-msg" id="formMsg" role="status" aria-live="polite"></p>
+    </form>
+  </div>
+</div>
 
 <script src="app.js"></script>
 </body>

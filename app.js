@@ -266,6 +266,46 @@
     update();
   });
 
+  /* окно заявки */
+  safe(function () {
+    var modal = document.getElementById("leadModal");
+    var sourceField = document.getElementById("leadSource");
+    if (!modal) return;
+    var lastFocused = null;
+
+    function open(source) {
+      lastFocused = document.activeElement;
+      if (sourceField) sourceField.value = source || "";
+      modal.classList.add("open");
+      document.body.style.overflow = "hidden";
+      var first = modal.querySelector("input:not([type=hidden]):not([tabindex='-1'])");
+      if (first) setTimeout(function () { first.focus(); }, 60);
+    }
+
+    function close() {
+      modal.classList.remove("open");
+      document.body.style.overflow = "";
+      if (lastFocused && lastFocused.focus) lastFocused.focus();
+    }
+
+    list("[data-lead]").forEach(function (el) {
+      el.addEventListener("click", function (e) {
+        e.preventDefault();
+        open(el.getAttribute("data-lead"));
+      });
+    });
+
+    list("[data-close]", modal).forEach(function (el) {
+      el.addEventListener("click", close);
+    });
+
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && modal.classList.contains("open")) close();
+    });
+
+    modal.closeLead = close;
+  });
+
   /* форма заявки */
   safe(function () {
     var form = document.getElementById("leadForm");
@@ -290,15 +330,16 @@
       button.disabled = true;
       show("Отправляем…", "");
 
-      var data = new FormData(form);
-      data.append("source", window.location.hash || "форма внизу страницы");
-
-      fetch("send.php", { method: "POST", body: data })
+      fetch("send.php", { method: "POST", body: new FormData(form) })
         .then(function (r) { return r.json(); })
         .then(function (res) {
           if (res && res.ok) {
             form.reset();
             show("Заявка отправлена. Ответим в течение рабочего дня.", "ok");
+            var modal = document.getElementById("leadModal");
+            if (modal && modal.closeLead) {
+              setTimeout(function () { modal.closeLead(); show("", ""); }, 2600);
+            }
           } else {
             show((res && res.error) || "Не удалось отправить. Напишите нам в Telegram или на почту.", "err");
           }
