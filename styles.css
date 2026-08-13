@@ -191,8 +191,10 @@ h2 em,h1 em{font-style:italic;font-weight:500;color:var(--amber)}
   display:flex;align-items:center;justify-content:center;
   background:var(--accent-soft);border:1px solid rgba(175,145,95,.45);
   font-family:var(--font-display);font-size:1.15rem;font-weight:700;letter-spacing:.02em;color:var(--amber);
+  object-fit:cover;
 }
 .person h3{font-size:1.15rem;margin-bottom:.15rem}
+.person-photo{padding:0;background:none;border-color:rgba(175,145,95,.55);filter:contrast(1.04)}
 .person-role{font-size:.78rem;color:var(--accent);font-weight:600;letter-spacing:.02em}
 .person p{font-size:.92rem;color:var(--muted);line-height:1.55}
 .person-tags{display:flex;flex-wrap:wrap;gap:.45rem;margin-top:1.1rem}
