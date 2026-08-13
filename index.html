@@ -177,8 +177,8 @@
         <p class="audit-free">Аудит бесплатный при заказе нейросотрудника</p>
       </div>
       <div class="audit-cta">
-        <a class="btn btn-accent btn-big" href="https://t.me/bfgroup_bot" target="_blank" rel="noopener">Получить аудит бизнеса</a>
-        <span class="audit-cta-note">в Telegram-боте — пара минут</span>
+        <a class="btn btn-accent btn-big" href="#contacts">Получить аудит бизнеса</a>
+        <span class="audit-cta-note">заявка — пара минут, ответим в рабочий день</span>
       </div>
     </div>
   </div>
@@ -506,29 +506,53 @@
 <section class="contacts" id="contacts">
   <div class="container container-narrow">
     <h2 class="reveal">Начните с аудита вашего бизнеса</h2>
-    <p class="contacts-lead reveal">Разберём процессы, покажем, где вы теряете время и деньги, и какой нейросотрудник окупится первым — под вашу нишу. Первичный разбор проходит в Telegram-боте и занимает пару минут, полный аудит — бесплатно при заказе нейросотрудника.</p>
-    <div class="contact-actions reveal">
-      <a class="btn btn-accent btn-big" href="https://t.me/bfgroup_bot" target="_blank" rel="noopener">
-        <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M9.04 15.9l-.38 5.32c.54 0 .78-.23 1.06-.5l2.55-2.44 5.28 3.87c.97.53 1.66.25 1.92-.9l3.48-16.3c.31-1.43-.52-2-1.46-1.65L2.4 10.9c-1.4.54-1.38 1.32-.24 1.67l5.2 1.62L19.4 6.3c.57-.37 1.09-.17.66.2L9.04 15.9z"/></svg>
-        Получить аудит бизнеса
-      </a>
-      <a class="btn btn-ghost btn-big" href="https://t.me/bf_group_official" target="_blank" rel="noopener">
-        Мы в Telegram — @bf_group_official
-      </a>
+    <p class="contacts-lead reveal">Разберём процессы, покажем, где вы теряете время и деньги, и какой нейросотрудник окупится первым — под вашу нишу. Оставьте заявку: ответим в течение рабочего дня. Полный аудит — бесплатно при заказе нейросотрудника.</p>
+
+    <form class="lead-form reveal" id="leadForm" novalidate>
+      <div class="field">
+        <label for="lead-name">Как к вам обращаться</label>
+        <input id="lead-name" name="name" type="text" autocomplete="name" required maxlength="80" placeholder="Имя">
+      </div>
+      <div class="field">
+        <label for="lead-contact">Телефон, e-mail или Telegram</label>
+        <input id="lead-contact" name="contact" type="text" required maxlength="120" placeholder="+7 900 000-00-00, вы@почта.ру или @username">
+      </div>
+      <div class="field">
+        <label for="lead-task">Какую задачу хотите решить</label>
+        <textarea id="lead-task" name="task" rows="4" required maxlength="2000" placeholder="Например: клиенты пишут ночью, отвечать некому — теряем заявки"></textarea>
+      </div>
+
+      <div class="field-hp" aria-hidden="true">
+        <label for="lead-company">Компания</label>
+        <input id="lead-company" name="company" type="text" tabindex="-1" autocomplete="off">
+      </div>
+
+      <label class="consent">
+        <input type="checkbox" name="consent" required>
+        <span>Согласен с <a href="privacy.html" target="_blank" rel="noopener">политикой обработки персональных данных</a></span>
+      </label>
+
+      <button class="btn btn-accent btn-big form-submit" type="submit">Отправить заявку</button>
+      <p class="form-msg" id="formMsg" role="status" aria-live="polite"></p>
+    </form>
+
+    <div class="contact-direct reveal">
+      <span>Или напишите напрямую:</span>
+      <a href="https://t.me/bf_group_official" target="_blank" rel="noopener">Telegram — @bf_group_official</a>
+      <a href="mailto:bf.group.biz@gmail.com">bf.group.biz@gmail.com</a>
     </div>
-    <p class="consent-note reveal">Переходя в бота и оставляя заявку, вы соглашаетесь с <a href="privacy.html" target="_blank" rel="noopener">политикой обработки персональных данных</a>.</p>
   </div>
 </section>
 
 <footer class="footer">
   <span>© 2026 BF GROUP</span>
   <a href="https://t.me/bf_group_official" target="_blank" rel="noopener">Telegram-канал</a>
-  <a href="https://t.me/bfgroup_bot" target="_blank" rel="noopener">Аудит в Telegram-боте</a>
   <a href="mailto:bf.group.biz@gmail.com">bf.group.biz@gmail.com</a>
   <a href="privacy.html">Политика конфиденциальности</a>
+  <span class="footer-legal">ООО «ФСК ВАВИЛОН» · ИНН 5009111201</span>
 </footer>
 
-<a class="sticky-cta" id="stickyCta" href="https://t.me/bfgroup_bot" target="_blank" rel="noopener">Обсудить в Telegram</a>
+<a class="sticky-cta" id="stickyCta" href="#contacts">Обсудить проект</a>
 
 <script src="app.js"></script>
 </body>

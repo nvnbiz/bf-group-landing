@@ -2,3 +2,5 @@ node_modules
 .next
 .env
 .env.local
+config.php
+leads.txt

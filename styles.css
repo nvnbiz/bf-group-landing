@@ -488,6 +488,39 @@ h2 em,h1 em{font-style:italic;font-weight:500;color:var(--amber)}
 }
 .sticky-cta.show{opacity:1;transform:none}
 
+/* форма заявки */
+.lead-form{
+  max-width:560px;margin:2.4rem auto 0;display:flex;flex-direction:column;gap:1.1rem;text-align:left;
+}
+.field{display:flex;flex-direction:column;gap:.4rem}
+.field label{font-size:.86rem;color:var(--muted);font-weight:500}
+.field input,.field textarea{
+  width:100%;padding:.85rem 1rem;border-radius:12px;font:inherit;font-size:.95rem;
+  color:var(--white);background:rgba(255,255,255,.06);
+  border:1px solid var(--line);transition:border-color .2s,background .2s;
+}
+.field textarea{resize:vertical;min-height:110px}
+.field input::placeholder,.field textarea::placeholder{color:rgba(244,244,248,.38)}
+.field input:focus,.field textarea:focus{
+  outline:none;border-color:var(--accent);background:rgba(255,255,255,.09);
+}
+.field input:user-invalid,.field textarea:user-invalid{border-color:#e0736b}
+.field-hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+.consent{display:flex;align-items:flex-start;gap:.6rem;font-size:.84rem;color:var(--muted);cursor:pointer}
+.consent input{margin-top:.2rem;width:16px;height:16px;flex-shrink:0;accent-color:var(--accent)}
+.consent a{color:var(--amber)}
+.form-submit{width:100%;justify-content:center;border:none;cursor:pointer}
+.form-submit[disabled]{opacity:.6;cursor:default}
+.form-msg{min-height:1.2em;font-size:.9rem}
+.form-msg.ok{color:#3ddc84}
+.form-msg.err{color:#e0736b}
+.contact-direct{
+  margin-top:2.2rem;display:flex;flex-wrap:wrap;justify-content:center;gap:.5rem 1.4rem;
+  font-size:.9rem;color:var(--muted);
+}
+.contact-direct a{color:var(--amber);text-decoration:none}
+.contact-direct a:hover{text-decoration:underline}
+
 /* reveal — прячем только если JS живой, иначе контент виден сразу */
 .reveal{opacity:1;transform:none}
 .js .reveal{opacity:0;transform:translateY(24px);transition:opacity .75s ease,transform .75s ease}

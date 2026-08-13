@@ -266,6 +266,50 @@
     update();
   });
 
+  /* форма заявки */
+  safe(function () {
+    var form = document.getElementById("leadForm");
+    var msg = document.getElementById("formMsg");
+    if (!form || !msg) return;
+    var button = form.querySelector(".form-submit");
+
+    function show(text, cls) {
+      msg.textContent = text;
+      msg.className = "form-msg " + cls;
+    }
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      if (!form.checkValidity()) {
+        show("Заполните все поля и отметьте согласие.", "err");
+        form.reportValidity();
+        return;
+      }
+
+      button.disabled = true;
+      show("Отправляем…", "");
+
+      var data = new FormData(form);
+      data.append("source", window.location.hash || "форма внизу страницы");
+
+      fetch("send.php", { method: "POST", body: data })
+        .then(function (r) { return r.json(); })
+        .then(function (res) {
+          if (res && res.ok) {
+            form.reset();
+            show("Заявка отправлена. Ответим в течение рабочего дня.", "ok");
+          } else {
+            show((res && res.error) || "Не удалось отправить. Напишите нам в Telegram или на почту.", "err");
+          }
+        })
+        .catch(function () {
+          show("Не удалось отправить. Напишите нам в Telegram или на почту.", "err");
+        })
+        .then(function () { button.disabled = false; });
+    });
+  });
+
   /* FAQ: only one open */
   safe(function () {
     var faqItems = list(".faq details");
