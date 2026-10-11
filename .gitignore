@@ -4,3 +4,4 @@ node_modules
 .env.local
 config.php
 leads.txt
+leads.jsonl

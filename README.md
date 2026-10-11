@@ -16,10 +16,12 @@
 
 ## Заявки
 
-Формы на сайте нет. Все кнопки ведут в Telegram:
+Форма на сайте отправляет заявку в `send.php` (хостинг Beget):
 
-- бот для аудита — [@bfgroup_bot](https://t.me/bfgroup_bot)
-- канал — [@bf_group_official](https://t.me/bf_group_official)
+- полная заявка сохраняется в `leads.jsonl` на уровень выше `public_html` (из интернета недоступен) и уходит на почту из `config.php`;
+- в Telegram приходит только уведомление «Новая заявка №N» — без имени, контактов и текста задачи.
+
+Настройки — в `config.php` рядом с `leads.jsonl`, образец — `config.example.php`.
 
 ## Деплой
 
