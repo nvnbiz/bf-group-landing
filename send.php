@@ -94,9 +94,15 @@ if (!empty($config['email'])) {
              . "Задача: $task\n"
              . ($source !== '' ? "Кнопка: $source\n" : '')
              . "Время: $when\n";
-    $headers = "From: site@bfgroup-ai.ru\r\n"
+    $from    = $config['mail_from'] ?? 'site@bfgroup-ai.ru';
+    $headers = "From: BF GROUP <$from>\r\n"
+             . "MIME-Version: 1.0\r\n"
              . "Content-Type: text/plain; charset=UTF-8\r\n";
-    $mailed = @mail($config['email'], $subject, $body, $headers);
+    // -f — адрес отправителя «на конверте», по нему почта проверяет SPF домена
+    $mailed = @mail($config['email'], $subject, $body, $headers, '-f' . $from);
+    if (!$mailed) {
+        @file_put_contents(__DIR__ . '/../mail-errors.log', "$when | заявка $num | mail() не отправил письмо\n", FILE_APPEND | LOCK_EX);
+    }
 }
 
 // --- 3. в Telegram — только уведомление, без персональных данных ---
